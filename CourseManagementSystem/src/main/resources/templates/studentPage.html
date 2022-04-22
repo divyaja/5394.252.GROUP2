@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<!--<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+
+<title>Registration</title>
+</head>-->
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Curriculum Management System</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Student Module</a>
+		<!--<span>[[${#request.remoteUser}]]</span>-->
+		<!--			<span sec:authentication="principal.type">Type</span>-->
+		<!--<span sec:authentication="name">Username</span>-->
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/logout}">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<br>
+	<br>
+
+	<div class="container">
+		<div class="row">
+			<div class="col text-center">
+				<form th:action="@{/registration}">
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Register Courses</button>
+						<a href="/" th:href="@{/registerCourses}"></a></span>
+					</div>
+				</form>
+				<!--<form th:action="@{/courses}">
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Create Courses</button>
+						<a href="/" th:href="@{/registerCourses}"></a></span>
+					</div>
+				</form>-->
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+
+</html>
