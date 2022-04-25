@@ -20,7 +20,7 @@ public class MainController {
 		if (userDetails.getType().equals(TYPE.ADMIN.toString())) {
 			return "adminRegistration";
 		} else if (userDetails.getType().equals(TYPE.STUDENT.toString())) {
-			return "redirect:/StudentController.do";
+			return "StudentDashboardPage.html";
 		} else if (userDetails.getType().equals(TYPE.PROFESSOR.toString())) {
 			return "professorDashboard";
 		}
@@ -33,11 +33,6 @@ public class MainController {
 	public String register(Model model) {
 		return "registration";
 	}
-
-	/*
-	 * @PostMapping("/adminlogin") public String adminLogin(Model model) { return
-	 * "adminRegistration"; }
-	 */
 
 	@GetMapping("/login")
 	public String login(Model model) {

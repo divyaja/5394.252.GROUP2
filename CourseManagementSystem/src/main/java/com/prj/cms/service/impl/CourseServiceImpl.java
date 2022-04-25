@@ -25,7 +25,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course saveCourse(Course course) {
-//		boolean isExists = courseRepository
 		return courseRepository.save(course);
 	}
 
@@ -47,7 +46,6 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Course findByName(String courseName) {
-		System.out.println("Course Name" +courseName);
 		return courseRepository.findByCourseName(courseName);
 	}
 
