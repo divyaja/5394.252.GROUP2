@@ -22,6 +22,10 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public Course findByName(String courseName) {
+		return courseRepository.findByCourseName(courseName);
+	}
+
+}
 		// TODO Auto-generated method stub
 		return courseRepository.findByCourseName(courseName);
 	}

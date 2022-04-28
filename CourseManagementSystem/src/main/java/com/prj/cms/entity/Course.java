@@ -24,6 +24,26 @@ public class Course {
 	@Column(name = "course_name", nullable = false)
 	private String courseName;
 
+	// private List<Assignment> assignments;
+
+	/*
+	 * @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	 * 
+	 * @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name =
+	 * "course_id", referencedColumnName = "id"), inverseJoinColumns
+	 * = @JoinColumn(name = "student_id", referencedColumnName = "id")) private
+	 * Collection<User> students;
+	 */
+	// private List<Assignment> assignments;
+
+	public Course() {
+
+	}
+
+	public Course(int id, String courseName) {
+		super();
+		this.id = id;
+		this.courseName = courseName;
 	@Column(name = "student_id")
 	private int studentID;
 	

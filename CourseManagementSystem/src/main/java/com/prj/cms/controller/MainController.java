@@ -20,9 +20,10 @@ public class MainController {
 		if (userDetails.getType().equals(TYPE.ADMIN.toString())) {
 			return "adminRegistration";
 		} else if (userDetails.getType().equals(TYPE.STUDENT.toString())) {
-			return "StudentDashboardPage.html";
+			return "StudentDashboardPage";
+
 		} else if (userDetails.getType().equals(TYPE.PROFESSOR.toString())) {
-			return "professorDashboard";
+			return "professorDashboardPage";
 		}
 
 		return "adminRegistration";

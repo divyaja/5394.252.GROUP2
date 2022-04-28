@@ -20,22 +20,18 @@
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<!-- Brand -->
-		<a class="navbar-brand" href="#">Admin Module</a>
+		<a class="navbar-brand" href="#">Curriculum Management System</a>
 
-		<!--<span>[[${#request.remoteUser}]]</span>-->
-		<!--<span sec:authentication="principal.type">Type</span>-->
-		<!--<span sec:authentication="name">Username</span>-->
-			<!--<span>[[${#request.remoteUser}]]</span>-->
-			<!--<span sec:authentication="principal.type">Type</span>-->
-			<!--<span sec:authentication="name">Username</span>-->
 		<!-- Toggler/collapsibe Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
+
+		<!-- Navbar links -->
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/}">Dashboard</a>
+					<a class="nav-link" th:href="@{/professorDashboardPage}">Dashboard</a>
 				</li>
 			</ul>
 		</div>
@@ -43,6 +39,9 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
+					<!--<span sec:authentication="principal.type">Type</span>-->
+					<span>[[${#request.remoteUser}]]</span>
+					<!--<span sec:authentication="name">Username</span>-->
 					<a class="nav-link" th:href="@{/logout}">Logout</a>
 				</li>
 			</ul>
@@ -54,23 +53,22 @@
 	<div class="container">
 		<div class="row">
 			<div class="col text-center">
-				<form th:action="@{/registration}">
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">Register Users</button>
-						<a href="/" th:href="@{/registerUser}"></a></span>
+				<form th:action="@{/registerProfessorCourse}" th:object="${course}" method="post">
+					<div class=" form-group">
+						<label for="courseName" class="control-label">List of Courses</label>
+						<select name="id">
+							<option value="0">Select a course</option>
+							<option th:each="c : ${professorCourses}" th:text="${c.courseName}" th:value="${c.id}"  />
+						</select>
 					</div>
-				</form>
-				<form th:action="@{/courses}">
-					<div class="form-group">
-						<button type="submit" class="btn btn-success">Create Courses</button>
-						<a href="/" th:href="@{/registerCourses}"></a></span>
-					</div>
-				</form>
 
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Register Course</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
-
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
 </body>

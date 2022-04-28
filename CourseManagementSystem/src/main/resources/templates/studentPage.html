@@ -55,6 +55,23 @@
 			<div class="col text-center">
 				<form th:action="@{/registerStudentCourse}" th:object="${course}" method="post">
 					<div class=" form-group">
+						<label for="courseName" class="control-label">List of Courses</label>
+						<select name="id">
+							<option value="0">Select a course</option>
+							<option th:each="c : ${studentCourses}" th:text="${c.courseName}" th:value="${c.id}" />
+						</select>
+					</div>
+					<form th:action="@{/registerStudentCourses}">
+						<div class="form-group">
+							<button type="submit" class="btn btn-success">Register Courses</button>
+						</div>
+					</form>
+					<!--<form th:action="@{/courses}">
+					<div class="form-group">
+						<button type="submit" class="btn btn-success">Create Courses</button>
+						<a href="/" th:href="@{/registerCourses}"></a></span>
+					</div>
+				</form>-->
 						<label for="scourses" class="control-label">List of Courses</label>
 						<select name="studentCourseName">
 							<option value="0">Select a course</option>
@@ -67,7 +84,7 @@
 					</div>
 				</form>
 			</div>
-		</div>
+		</div>	
 	</div>
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
 	<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
