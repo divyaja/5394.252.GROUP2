@@ -63,13 +63,17 @@ public class UserDetailsImpl implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-	
+
 	public String getType() {
         return user.getType();
     }
 
 	public Long getID() {
 		// TODO Auto-generated method stub
+		return user.getType();
+	}
+
+	public Long getID() {
 		return user.getId();
 	}
 }

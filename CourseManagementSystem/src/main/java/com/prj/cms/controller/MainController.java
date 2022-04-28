@@ -21,6 +21,7 @@ public class MainController {
 			return "adminRegistration";
 		} else if (userDetails.getType().equals(TYPE.STUDENT.toString())) {
 			return "StudentDashboardPage";
+
 		} else if (userDetails.getType().equals(TYPE.PROFESSOR.toString())) {
 			return "professorDashboardPage";
 		}
@@ -33,11 +34,6 @@ public class MainController {
 	public String register(Model model) {
 		return "registration";
 	}
-
-	/*
-	 * @PostMapping("/adminlogin") public String adminLogin(Model model) { return
-	 * "adminRegistration"; }
-	 */
 
 	@GetMapping("/login")
 	public String login(Model model) {

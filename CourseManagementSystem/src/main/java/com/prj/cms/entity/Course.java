@@ -44,6 +44,32 @@ public class Course {
 		super();
 		this.id = id;
 		this.courseName = courseName;
+	@Column(name = "student_id")
+	private int studentID;
+	
+	@Column(name = "student_emailId")
+	private int studentEmailID;
+
+	// private List<Assignment> assignments;
+
+	public int getStudentEmailID() {
+		return studentEmailID;
+	}
+
+	public void setStudentEmailID(int studentEmailID) {
+		this.studentEmailID = studentEmailID;
+	}
+
+	public int getStudentID() {
+		return studentID;
+	}
+
+	public void setStudentID(int studentID) {
+		this.studentID = studentID;
+	}
+
+	public Course() {
+
 	}
 
 	public Course(String courseName) {

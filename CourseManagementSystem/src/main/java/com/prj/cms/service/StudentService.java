@@ -10,4 +10,6 @@ public interface StudentService {
 
 	Course findByName(String courseName);
 
+	Course saveCourse(Course course);
+
 }
