@@ -25,11 +25,6 @@ public class StudentServiceImpl implements StudentService {
 		return courseRepository.findByCourseName(courseName);
 	}
 
-}
-		// TODO Auto-generated method stub
-		return courseRepository.findByCourseName(courseName);
-	}
-
 	@Override
 	public Course saveCourse(Course course) {
 		// TODO Auto-generated method stub

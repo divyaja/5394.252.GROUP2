@@ -65,11 +65,6 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 	public String getType() {
-        return user.getType();
-    }
-
-	public Long getID() {
-		// TODO Auto-generated method stub
 		return user.getType();
 	}
 

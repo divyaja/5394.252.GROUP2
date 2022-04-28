@@ -40,6 +40,7 @@ public class Course {
 		super();
 		this.id = id;
 		this.courseName = courseName;
+	}
 
 	@Column(name = "student_id")
 	private int studentID;

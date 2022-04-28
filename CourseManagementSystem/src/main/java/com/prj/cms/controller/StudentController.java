@@ -1,6 +1,7 @@
 package com.prj.cms.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -72,6 +73,8 @@ public class StudentController {
 
 		coursesRegistered.stream().forEach(s -> System.out.println(s.toString()));
 		model.addAttribute("studentCourses", coursesRegistered);
+		return null;
+	}
 	@GetMapping("/studentDashboard")
 	public String register(Model model) {
 		return "studentDashboardPage";
@@ -96,6 +99,7 @@ public class StudentController {
 		}
 
 		studentCourseService.saveStudentCourse(objStudentCourse);
+		return null;
 
 		/*
 		 * Course existing = studentService.findByName(course.getCourseName()); if
@@ -125,6 +129,7 @@ public class StudentController {
 		 * (result.hasErrors()) { return "create_course"; }
 		 * studentService.saveCourse(course);
 		 */
+	}
 
 	public String saveCourse(@ModelAttribute("course") Course course, BindingResult result) {
 
