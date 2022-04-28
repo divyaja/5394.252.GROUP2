@@ -29,9 +29,6 @@ public class ProfessorController {
 	@Autowired
 	private ProfessorServive professorCourseService;
 
-	@Autowired
-	private AssignmentService assignmentService;
-
 	@GetMapping("/listProfessorCourses")
 	public String listStudentCourses(Model model) {
 
@@ -91,4 +88,5 @@ public class ProfessorController {
 
 		return null;
 	}
+
 }
