@@ -39,21 +39,21 @@
 	<br>
 	<br>
 	<div class="container">
-		<div class="row">
+		<!--<div class="row">
 			<h1> List of Courses</h1>
-		</div>
+		</div>-->
 
-		<div class="col-lg-3">
+		<!--<div class="col-lg-3">
 			<a th:href="@{/courses/new}" class="btn btn-primary btn-sm mb-3"> Add Course</a>
-		</div>
+		</div>-->
 		<table class="table">
-			<thead class="table-dark">
+			<!--<thead class="table-dark">
 				<tr>
 					<th> Course Name </th>
 					<th> Due Date </th>
 					<th> Actions </th>
 				</tr>
-			</thead>
+			</thead>-->
 
 			<script>
 				var expanded = false;
@@ -85,14 +85,15 @@
 				}
 			</script>
 
-		<!--	<script th:inline="javascript"> 	// Enable Thymeleaf inlining 
-				var email = [[${ courses[0].courseName }]]; 	// Behaves just like in HTML
+			<!--<script th:inline="javascript"> 	// Enable Thymeleaf inlining 
+				<script th:inline="javascript"> 	// Enable Thymeleaf inlining
+					var email = [[${courses[0].courseName}]]; 	// Behaves just like in HTML
 
 			</script>-->
 
-			<a href="#openModal">CPP</a>
+			<!--<a href="#openModal">CPP</a>
 			<br />
-			<a href="#openModal">DataScience</a>
+			<a href="#openModal">DataScience</a>-->
 
 			<div id="openModal" class="modalWindow">
 				<div>
@@ -173,7 +174,7 @@
 				}
 			</style>
 
-			<form>
+			<!--<form>
 				<div class="multiselect">
 					<div class="selectBox" onclick="showCheckboxes()">
 						<select>
@@ -194,7 +195,7 @@
 				<input value="Register" onclick="writeText()" type="button">
 				<br /> <br />
 			</form>
-			<br />
+			<br />-->
 
 
 			<tbody>
