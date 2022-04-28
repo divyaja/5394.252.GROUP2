@@ -36,17 +36,14 @@ public class Course {
 	 */
 	// private List<Assignment> assignments;
 
-	public Course() {
-
-	}
-
 	public Course(int id, String courseName) {
 		super();
 		this.id = id;
 		this.courseName = courseName;
+
 	@Column(name = "student_id")
 	private int studentID;
-	
+
 	@Column(name = "student_emailId")
 	private int studentEmailID;
 
