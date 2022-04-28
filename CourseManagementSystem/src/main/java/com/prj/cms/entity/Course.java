@@ -11,11 +11,11 @@ import javax.persistence.UniqueConstraint;
 @Entity
 @Table(name = "courses", uniqueConstraints = @UniqueConstraint(columnNames = "course_name"))
 public class Course {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@Override
 	public String toString() {
 		return "Course [id=" + id + ", courseName=" + courseName + "]";
@@ -23,17 +23,34 @@ public class Course {
 
 	@Column(name = "course_name", nullable = false)
 	private String courseName;
-	
-	//private List<Assignment> assignments;
-	
+
+	// private List<Assignment> assignments;
+
+	/*
+	 * @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	 * 
+	 * @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name =
+	 * "course_id", referencedColumnName = "id"), inverseJoinColumns
+	 * = @JoinColumn(name = "student_id", referencedColumnName = "id")) private
+	 * Collection<User> students;
+	 */
+	// private List<Assignment> assignments;
+
 	public Course() {
-		
+
 	}
+
+	public Course(int id, String courseName) {
+		super();
+		this.id = id;
+		this.courseName = courseName;
+	}
+
 	public Course(String courseName) {
 		super();
 		this.courseName = courseName;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -49,6 +66,5 @@ public class Course {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-	
-		
+
 }

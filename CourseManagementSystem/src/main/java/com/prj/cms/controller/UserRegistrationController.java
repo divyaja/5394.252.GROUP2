@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.prj.cms.controller.dto.UserRegistrationDto;
 import com.prj.cms.entity.User;
 import com.prj.cms.service.UserService;
+import com.prj.cms.service.impl.UserDetailsImpl;
 
 @Controller
 @RequestMapping("/registration")
@@ -60,7 +63,22 @@ public class UserRegistrationController {
 
 		userService.save(userDto);
 //		return "redirect:/login";
-		return "redirect:/UserDetailsPage";
+		return "redirect:/user";
+	}
+
+	@GetMapping("/user")
+	public String currentUser(@ModelAttribute("user") @Valid UserRegistrationDto userDto, BindingResult result,
+			Model model) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+		User user = userService.findByEmail(userDetails.getUsername());
+		String firstname = user.getFirstName();
+		model.addAttribute("firstName", firstname);
+		model.addAttribute("emailAddress", user.getEmail());
+
+		return "UserDetailsPage"; // this is the name of my template
 	}
 
 }

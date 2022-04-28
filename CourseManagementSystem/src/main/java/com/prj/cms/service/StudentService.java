@@ -8,4 +8,6 @@ public interface StudentService {
 
 	List<Course> getAllCourses();
 
+	Course findByName(String courseName);
+
 }

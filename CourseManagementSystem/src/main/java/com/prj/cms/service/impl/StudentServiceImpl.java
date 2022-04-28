@@ -18,4 +18,9 @@ public class StudentServiceImpl implements StudentService {
 		return courseRepository.findAll();
 	}
 
+	@Override
+	public Course findByName(String courseName) {
+		return courseRepository.findByCourseName(courseName);
+	}
+
 }
