@@ -14,7 +14,6 @@ public class ProfessorCourseImpl implements ProfessorServive {
 
 	@Autowired
 	private ProfessorCourseRespository professorCourseRespository;
-	
 
 	@Override
 	public ProfessorCourses saveProfessorCourse(ProfessorCourses professorCourse) {
@@ -24,6 +23,11 @@ public class ProfessorCourseImpl implements ProfessorServive {
 	@Override
 	public List<ProfessorCourses> findAllCourseProfessorMappings() {
 		return professorCourseRespository.findAll();
+	}
+
+	@Override
+	public void deleteProfessorCourseMapping(ProfessorCourses professorCourse) {
+		professorCourseRespository.delete(professorCourse);
 	}
 
 }

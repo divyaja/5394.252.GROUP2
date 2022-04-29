@@ -10,4 +10,6 @@ public interface ProfessorServive {
 
 	List<ProfessorCourses> findAllCourseProfessorMappings();
 
+	void deleteProfessorCourseMapping(ProfessorCourses professorCourse);
+
 }

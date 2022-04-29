@@ -17,7 +17,13 @@
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/professorDashboard}">Dashboard</a>
+				</li>
+			</ul>
+		</div>
 		<!-- Navbar links -->
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
@@ -50,7 +56,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c: ${studentCourses}">
+				<tr th:each="c: ${professorCourseMappings}">
 					<td th:text="${c.courseName}"></td>
 					<td>
 						<!--<a th:href="@{/courses/edit/{id}(id=${c.id})}" class="btn btn-primary">View</a>
@@ -59,9 +65,9 @@
 						drop courses based on student id and course id
 						delete the combined record
 						-->
-						<a th:href="@{/studentCourses/view/assignments{id}(id=${c.id})}"
-							class="btn btn-primary">View</a>
-						<a th:href="@{/studentCourses/{id}(id=${c.id})}" class="btn btn-danger">Drop Course</a>
+						<a th:href="@{/professorCourses/add/assignments{id}(id=${c.id})}"
+							class="btn btn-primary">Create Assignments</a>
+						<a th:href="@{/professorCourses/{id}(id=${c.id})}" class="btn btn-danger">Drop Course</a>
 					</td>
 				</tr>
 			</tbody>
