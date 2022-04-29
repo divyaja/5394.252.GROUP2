@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.prj.cms.entity.Course;
@@ -30,8 +31,7 @@ public class ProfessorController {
 	private ProfessorServive professorCourseService;
 
 	@GetMapping("/listProfessorCourses")
-	public String listStudentCourses(Model model) {
-
+	public String listProfessorCourses(Model model) {
 		model.addAttribute("professorCourses", courseService.getAllCourses());
 		return "professorPage";
 	}
@@ -39,13 +39,11 @@ public class ProfessorController {
 	@GetMapping("/professorDashboard")
 	public String professorDashboard(Model model) {
 		List<ProfessorCourses> professorCoursesMapping = professorCourseService.findAllCourseProfessorMappings();
-
 		List<Course> coursesRegistered = courseService.getAllCourses().stream()
 				.filter(f -> professorCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
 				.collect(Collectors.toList());
 		coursesRegistered.stream().forEach(s -> System.out.println(s.toString()));
-		model.addAttribute("professorCourses", coursesRegistered);
-
+		model.addAttribute("professorCourseMappings", coursesRegistered);
 		return "professorDashboardPage";
 	}
 
@@ -62,7 +60,6 @@ public class ProfessorController {
 
 			professorCourseService.saveProfessorCourse(obj);
 		}
-		// return the dashboard page after saving
 		return "professorDashboardPage";
 	}
 
@@ -83,11 +80,27 @@ public class ProfessorController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-		System.out.println("STudent Details : " + userDetails.getID());
-		System.out.println("STudent Details : " + userDetails.getUsername());
-		System.out.println("STudent Details : " + userDetails.getType());
+		System.out.println("User Details : " + userDetails.getID());
+		System.out.println("User Details : " + userDetails.getUsername());
+		System.out.println("User Details : " + userDetails.getType());
 
 		return null;
+	}
+
+	@GetMapping("/professorCourses/add/assignments{id}")
+	public String addCourseAssignments(@PathVariable int id) {
+		
+		return null;
+	}
+
+	@GetMapping("/professorCourses/{id}")
+	public String deleteProfessorCourseMapping(@PathVariable int id) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+		ProfessorCourses professorCourse = new ProfessorCourses(id, userDetails.getID());
+		professorCourseService.deleteProfessorCourseMapping(professorCourse);
+
+		return "redirect:/professorDashboard";
 	}
 
 }

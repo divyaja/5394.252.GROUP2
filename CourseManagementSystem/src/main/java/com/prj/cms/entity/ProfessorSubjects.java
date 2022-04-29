@@ -9,6 +9,10 @@ import lombok.Setter;
 @Setter
 public class ProfessorSubjects implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6490603657778401517L;
 	private int courseId;
 	private Long professorId;
 
