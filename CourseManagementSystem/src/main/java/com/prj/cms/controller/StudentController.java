@@ -38,7 +38,7 @@ public class StudentController {
 		this.studentService = studentService;
 	}
 
-	List<Course> courses;
+	private List<Course> courses;
 
 	/*
 	 * @ModelAttribute public void loadAllCourses(Model model) { courses = new
@@ -46,22 +46,23 @@ public class StudentController {
 	 */
 
 	@GetMapping("/listStudentCourses")
-
 	public String listStudentCourses(Model model) {
-
-		// System.out.println("size of the courses in the Db : " +
-		// studentService.getAllCourses().size());
-
-		model.addAttribute("studentAssignments", assignmentService.getAllAssignments());
+		model.addAttribute("studentCourses", studentService.getAllCourses());
 		return "studentPage";
 	}
 
+	/*
+	 * @GetMapping("/listStudentCourseMapping") public String
+	 * listStudentCourseMapping(Model model) { model.addAttribute("studentCourses",
+	 * studentCourseService.findAllCourseStudentMappings()); return
+	 * "studentDashboardPage"; }
+	 */
+
 	@GetMapping("/listStudentAssignments")
 	public String listStudentAssignments(Model model) {
-
 		System.out.println("size of the assignments in the Db : " + assignmentService.getAllAssignments());
 		model.addAttribute("studentAssignments", assignmentService.getAllAssignments());
-		return "studentPage";// return to assignments page
+		return "assignmentsPage";// return to assignments page
 	}
 
 	@GetMapping("/studentDashboard")
@@ -70,17 +71,13 @@ public class StudentController {
 		List<Course> coursesRegistered = studentService.getAllCourses().stream()
 				.filter(f -> studentCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
 				.collect(Collectors.toList());
-
 		coursesRegistered.stream().forEach(s -> System.out.println(s.toString()));
+
 		model.addAttribute("studentCourses", coursesRegistered);
-		return null;
-	}
-	@GetMapping("/studentDashboard")
-	public String register(Model model) {
 		return "studentDashboardPage";
 	}
 
-	@PostMapping("/registerStudentCourse")
+	@PostMapping("/registerStudentCourses")
 	public String registerStudentCourse(@ModelAttribute("course") Course course, BindingResult result) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
@@ -92,59 +89,28 @@ public class StudentController {
 		System.out.println("STudent Details : " + userDetails.getType());
 
 		StudentCourses objStudentCourse = new StudentCourses(course.getId(), userDetails.getID());
-//		studentCourseService.saveStudentCourse(objStudentCourse);
 		List<StudentCourses> existingData = studentCourseService.findAllCourseStudentMappings();
 		if (isRegistered(existingData, objStudentCourse)) {
 			result.rejectValue("courseName", null, "Duplicate request. Please register a new course.");
 		}
-
 		studentCourseService.saveStudentCourse(objStudentCourse);
-		return null;
-
-		/*
-		 * Course existing = studentService.findByName(course.getCourseName()); if
-		 * (existing != null) { List<User> existingStudents = (List<User>)
-		 * existing.getStudents(); boolean isRegistered =
-		 * checkIfStudentisRegistered(existingStudents, userDetails.getUsername());
-		 * 
-		 * if (isRegistered) { result.rejectValue("courseName", null,
-		 * "Duplicate request. Please register a new course."); } }
-		 * 
-		 * Course courseObj = new Course(); List<User> studentsEmail = new
-		 * ArrayList<>(); User userobj = new User();
-		 * userobj.setEmail(userDetails.getUsername());
-		 * userobj.setId(userDetails.getID());
-		 * 
-		 * studentsEmail.add(userobj);
-		 * 
-		 * courseObj.setCourseName(course.getCourseName());
-		 * courseObj.setId(course.getId()); courseObj.setStudents(studentsEmail);
-		 */
-
-		// studentService.saveCourse(course);
-		/// if student is already registered to the course
-		/*
-		 * if ((existing != null && existing.getStudents() != null) &&
-		 * existing.getStudentEmailID() == course.getStudentEmailID()) { } if
-		 * (result.hasErrors()) { return "create_course"; }
-		 * studentService.saveCourse(course);
-		 */
+		return "studentDashboardPage";
 	}
 
-	public String saveCourse(@ModelAttribute("course") Course course, BindingResult result) {
-
-		Course existing = studentService.findByName(course.getCourseName());
-		System.out.println("Existing Course ID : " + existing.getStudentID());
-
-		if ((existing != null && existing.getStudentID() > 0) && existing.getStudentID() == course.getStudentID()) {
-			result.rejectValue("courseName", null, "Duplicate request. Please register a new course.");
-		}
-		if (result.hasErrors()) {
-			return "create_course";
-		}
-		studentService.saveCourse(course);
-		return "redirect:/listStudentCourses";
-	}
+	/*
+	 * public String saveCourse(@ModelAttribute("course") Course course,
+	 * BindingResult result) {
+	 * 
+	 * Course existing = studentService.findByName(course.getCourseName());
+	 * System.out.println("Existing Course ID : " + existing.getStudentID());
+	 * 
+	 * if ((existing != null && existing.getStudentID() > 0) &&
+	 * existing.getStudentID() == course.getStudentID()) {
+	 * result.rejectValue("courseName", null,
+	 * "Duplicate request. Please register a new course."); } if
+	 * (result.hasErrors()) { return "create_course"; }
+	 * studentService.saveCourse(course); return "redirect:/listStudentCourses"; }
+	 */
 	/*
 	 * @PostMapping("/registerStudentCourses") public String
 	 * saveStudentCourse(@ModelAttribute("course") Course course, BindingResult
@@ -189,5 +155,13 @@ public class StudentController {
 		StudentCourses studentCourse = new StudentCourses(id, userDetails.getID());
 		studentCourseService.deleteStudentCourse(studentCourse);
 		return "redirect:/studentDashboard";
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 }

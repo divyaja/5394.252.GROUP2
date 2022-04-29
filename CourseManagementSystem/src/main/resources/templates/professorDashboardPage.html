@@ -40,6 +40,32 @@
 				</form>
 			</div>
 		</div>
+		<br />
+		<br />
+		<table class="table">
+			<thead class="table-dark">
+				<tr>
+					<th> Course Name </th>
+					<th> Actions </th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c: ${studentCourses}">
+					<td th:text="${c.courseName}"></td>
+					<td>
+						<!--<a th:href="@{/courses/edit/{id}(id=${c.id})}" class="btn btn-primary">View</a>
+						
+						view assignments page
+						drop courses based on student id and course id
+						delete the combined record
+						-->
+						<a th:href="@{/studentCourses/view/assignments{id}(id=${c.id})}"
+							class="btn btn-primary">View</a>
+						<a th:href="@{/studentCourses/{id}(id=${c.id})}" class="btn btn-danger">Drop Course</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
