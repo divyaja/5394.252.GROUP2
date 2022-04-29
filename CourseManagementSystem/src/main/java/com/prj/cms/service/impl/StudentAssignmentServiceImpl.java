@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.prj.cms.entity.CourseAssignments;
-import com.prj.cms.service.AssignmentService;
+import com.prj.cms.service.CourseAssignmentService;
 
 @Service
-public class StudentAssignmentServiceImpl implements AssignmentService {
+public class StudentAssignmentServiceImpl implements CourseAssignmentService {
 
 	@Override
 	public List<CourseAssignments> getAllAssignments() {

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.prj.cms.entity.Course;
 import com.prj.cms.entity.CourseAssignments;
 import com.prj.cms.entity.ProfessorCourses;
+import com.prj.cms.service.CourseAssignmentService;
 import com.prj.cms.service.CourseService;
 import com.prj.cms.service.ProfessorServive;
 import com.prj.cms.service.impl.UserDetailsImpl;
@@ -29,11 +30,33 @@ public class ProfessorController {
 
 	@Autowired
 	private ProfessorServive professorCourseService;
+	
+	@Autowired
+	private CourseAssignmentService assignmentService;
 
 	@GetMapping("/listProfessorCourses")
 	public String listProfessorCourses(Model model) {
 		model.addAttribute("professorCourses", courseService.getAllCourses());
 		return "professorPage";
+	}
+	
+	@GetMapping("/assignmentDashboard")
+	public String loadAssignments(Model model) {
+		
+
+		List<CourseAssignments> courseAssignments = assignmentService.getAllAssignments();
+		List<Course> assignmentsRegistered = 
+				
+				courseService.getAllCourses().stream()
+				.filter(f -> professorCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
+				.collect(Collectors.toList());
+		coursesRegistered.stream().forEach(s -> System.out.println(s.toString()));
+		model.addAttribute("professorCourseMappings", coursesRegistered);
+		return "professorDashboardPage";
+	
+		
+		model.addAttribute("assignmentslist",assignmentService.getAllAssignments() );
+		return "AssignmentsHomePage";
 	}
 
 	@GetMapping("/professorDashboard")
@@ -76,7 +99,7 @@ public class ProfessorController {
 	}
 
 	@PostMapping("/addAssignmentForCourse")
-	public String addAssignment(@ModelAttribute("assignment") CourseAssignments assign, BindingResult result) {
+	public String addAssignment(@ModelAttribute("assignment") CourseAssignments assignments, BindingResult result) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -84,13 +107,19 @@ public class ProfessorController {
 		System.out.println("User Details : " + userDetails.getUsername());
 		System.out.println("User Details : " + userDetails.getType());
 
-		return null;
+		return "AssignmentsHomePage";
 	}
 
-	@GetMapping("/professorCourses/add/assignments{id}")
+	@GetMapping("/professorCourses/add/assignments/{id}")
 	public String addCourseAssignments(@PathVariable int id) {
-		
-		return null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+		System.out.println("User Details : " + userDetails.getID());
+		System.out.println("User Details : " + userDetails.getUsername());
+		System.out.println("User Details : " + userDetails.getType());
+
+		return "AssignmentsHomePage";
 	}
 
 	@GetMapping("/professorCourses/{id}")
