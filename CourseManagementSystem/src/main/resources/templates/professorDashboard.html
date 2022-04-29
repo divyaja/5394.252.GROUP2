@@ -55,158 +55,157 @@
 				</tr>
 			</thead>
 
-<script>
-var expanded = false;
+			<script>
+				var expanded = false;
 
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
-  }
-}
+				function showCheckboxes() {
+					var checkboxes = document.getElementById("checkboxes");
+					if (!expanded) {
+						checkboxes.style.display = "block";
+						expanded = true;
+					} else {
+						checkboxes.style.display = "none";
+						expanded = false;
+					}
+				}
 
-function writeText() {
-    // get assign the values from each text input
-    var myCAPtext = document.getElementById('CAPoutput');
+				function writeText() {
+					// get assign the values from each text input
+					var myCAPtext = document.getElementById('CAPoutput');
 
-    // assign multiple text values
-    var select_1 = document.getElementById('checkboxes').val;
+					// assign multiple text values
+					var select_1 = document.getElementById('checkboxes').val;
 
-    var CAPtext = select_1.join("\n\n");
-    myCAPtext.value = CAPtext;
-}
-function myFunction() {
+					var CAPtext = select_1.join("\n\n");
+					myCAPtext.value = CAPtext;
+				}
+				function myFunction() {
 
-    location.href = 'registration';
-}
-</script>
+					location.href = 'registration';
+				}
+			</script>
 
-<script th:inline="javascript"> 	// Enable Thymeleaf inlining 
-  	var email = [[${courses[0].courseName}]]; 	// Behaves just like in HTML
+			<a href="#openModal">CPP</a>
+			<br />
+			<a href="#openModal">DataScience</a>
 
-</script>
+			<div id="openModal" class="modalWindow">
+				<div>
+					<br />
+					<h3>Professor's Course Page</h3>
+					<br>
+					<button type="button" class="btn btn-default" onclick="location.href = 'registration';">Post study
+						material</button>
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-default" onclick="myFunction()">Grade assignments</button>
+					&nbsp;
+					<a href="#ok" title="OK" class="ok">Cancel</a>
+				</div>
+			</div>
 
-<a href="#openModal">CPP</a>
-<br/> 
-<a href="#openModal">DataScience</a>
+			<style>
+				.modalWindow {
+					position: fixed;
+					top: 0;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					background: rgba(0, 0, 0, 0.2);
+					z-index: 99999;
+					opacity: 0;
+					pointer-events: none;
+					text-align: center;
+				}
 
-<div id="openModal" class="modalWindow">
-	<div>
-	<br/>
-		<h3>Professor's Course Page</h3>
-		<br>
-		<button type="button"  class="btn btn-default" onclick="location.href = 'registration';" >Post study material</button>
-	&nbsp;&nbsp;
-		<button type="button"  class="btn btn-default" onclick="myFunction()" >Grade assignments</button>
-		&nbsp;
-		<a href="#ok" title="OK" class="ok">Cancel</a>
-	</div>
-</div>
+				.modalWindow:target {
+					opacity: 1;
+					pointer-events: auto;
+				}
 
-<style>
-		.modalWindow {
-		position: fixed;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		background: rgba(0, 0, 0, 0.2);
-		z-index: 99999;
-		opacity: 0;
-		pointer-events: none;
-		text-align: center;
-	}
-	.modalWindow:target {
-		opacity: 1;
-		pointer-events: auto;
-	}
-	.modalWindow>div {
-		width: 600px;
-		height: 150px;
-		position: relative;
-		left: 20%;
-       
-		margin: 10%;
-		background: #fff;
-	}
+				.modalWindow>div {
+					width: 600px;
+					height: 150px;
+					position: relative;
+					left: 20%;
+
+					margin: 10%;
+					background: #fff;
+				}
 
 
-	.multiselect {
-		width: 200px;
-	}
+				.multiselect {
+					width: 200px;
+				}
 
-	.selectBox {
-		position: relative;
-	}
+				.selectBox {
+					position: relative;
+				}
 
-	.selectBox select {
-		width: 100%;
-		font-weight: bold;
-	}
+				.selectBox select {
+					width: 100%;
+					font-weight: bold;
+				}
 
-	.overSelect {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-	}
+				.overSelect {
+					position: absolute;
+					left: 0;
+					right: 0;
+					top: 0;
+					bottom: 0;
+				}
 
-	#checkboxes {
-		display: none;
-		border: 1px #dadada solid;
-	}
+				#checkboxes {
+					display: none;
+					border: 1px #dadada solid;
+				}
 
-	#checkboxes label {
-		display: block;
-	}
+				#checkboxes label {
+					display: block;
+				}
 
-	#checkboxes label:hover {
-		background-color: #1e90ff;
-	}
-</style>
+				#checkboxes label:hover {
+					background-color: #1e90ff;
+				}
+			</style>
 
-<form>
-	<div class="multiselect">
-		<div class="selectBox" onclick="showCheckboxes()">
-			<select>
-				<option>Select Courses</option>
-			</select>
-			<div class="overSelect"></div>
-		</div>
-		<div id="checkboxes">
-			<label for="one">
-				<input type="checkbox" id="one" />Data science</label>
-			<label for="two">
-				<input type="checkbox" id="two" />Computer science</label>
-			<label for="three">
-				<input type="checkbox" id="three" />Networking</label>
-		</div>
-	</div>
-	<br />
-	<input value="Register" onclick="writeText()" type="button">
-	<br /> <br />
-</form>
-<br />
+			<form>
+				<div class="multiselect">
+					<div class="selectBox" onclick="showCheckboxes()">
+						<select>
+							<option>Select Courses</option>
+						</select>
+						<div class="overSelect"></div>
+					</div>
+					<div id="checkboxes">
+						<label for="one">
+							<input type="checkbox" id="one" />Data science</label>
+						<label for="two">
+							<input type="checkbox" id="two" />Computer science</label>
+						<label for="three">
+							<input type="checkbox" id="three" />Networking</label>
+					</div>
+				</div>
+				<br />
+				<input value="Register" onclick="writeText()" type="button">
+				<br /> <br />
+			</form>
+			<br />
 
 
-<tbody>
-	<tr th:each="c: ${courses}">
-	
-		<td th:text="${c.courseName}"></td>
-		<td>
-		<a href="#openModal" class="btn btn-danger">View</a>
-	    <a th:href="@{/courses/edit/{id}(id=${c.id})}" class="btn btn-primary">Update</a>
-		
-		</td>
-	</tr>
-</tbody>
+			<tbody>
+				<tr th:each="c: ${courses}">
+
+					<td th:text="${c.courseName}"></td>
+					<td>
+						<a href="#openModal" class="btn btn-danger">View</a>
+						<a th:href="@{/courses/edit/{id}(id=${c.id})}" class="btn btn-primary">Update</a>
+
+					</td>
+				</tr>
+			</tbody>
 
 
 
 </body>
+
 </html>

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.prj.cms.entity.Course;
 import com.prj.cms.entity.StudentCourses;
-import com.prj.cms.service.AssignmentService;
+import com.prj.cms.service.CourseAssignmentService;
 import com.prj.cms.service.CourseService;
 import com.prj.cms.service.StudentCourseService;
 import com.prj.cms.service.impl.UserDetailsImpl;
@@ -31,7 +31,7 @@ public class StudentController {
 	private StudentCourseService studentCourseService;
 
 	@Autowired
-	private AssignmentService assignmentService;
+	private CourseAssignmentService assignmentService;
 
 	public StudentController(CourseService courseService) {
 		super();

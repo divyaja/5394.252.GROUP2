@@ -12,7 +12,7 @@
 <body>
 	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
 		<!-- Brand -->
-		<a class="navbar-brand" href="#">Professor Module</a>
+		<a class="navbar-brand" href="#">Assignment Module</a>
 
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
@@ -20,7 +20,7 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="nav-link" th:href="@{/professorDashboard}">Dashboard</a>
+					<a class="nav-link" th:href="@{/assignmentDashboard}">Dashboard</a>
 				</li>
 			</ul>
 		</div>
@@ -37,12 +37,12 @@
 	<br>
 
 	<div class="container">
-		<div class="row">
+	<div class="row">
 			<div class="col text-center">
-				<form th:action="@{/listProfessorCourses}">
+				<form th:action="@{/addAssignmentForCourse}">
 					<div class="form-group">
-						<button type="submit" class="btn btn-success">Register Courses</button>
-					</div>
+						<button type="submit" class="btn btn-success">Create Assignments</button>
+					</div> 
 				</form>
 			</div>
 		</div>
@@ -51,23 +51,16 @@
 		<table class="table">
 			<thead class="table-dark">
 				<tr>
-					<th> Course Name </th>
+					<th> Assignment Name </th>
 					<th> Actions </th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="c: ${professorCourseMappings}">
-					<td th:text="${c.courseName}"></td>
+				<tr th:each="a: ${assignmentslist}">
+					<td th:text="${a.assignmentName}"></td>
 					<td>
-						<!--<a th:href="@{/courses/edit/{id}(id=${c.id})}" class="btn btn-primary">View</a>
-						
-						view assignments page
-						drop courses based on student id and course id
-						delete the combined record
-						-->
-						<a th:href="@{/professorCourses/add/assignments/{id}(id=${c.id})}"
-							class="btn btn-primary">Create Assignments</a>
-						<a th:href="@{/professorCourses/{id}(id=${c.id})}" class="btn btn-danger">Drop Course</a>
+						<a th:href="@{/assignments/edit/{id}(id=${a.id})}" class="btn btn-primary">Update Assignment</a>
+						<a th:href="@{/assignments/{id}(id=${a.id})}" class="btn btn-danger">Delete Assignment</a>
 					</td>
 				</tr>
 			</tbody>
