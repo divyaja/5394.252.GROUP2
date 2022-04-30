@@ -35,4 +35,9 @@ public class AssignmentServImpl implements AssignmentService {
 		return repository.getById(id);
 	}
 
+	@Override
+	public void deleteAssignmentById(int id) {
+		repository.deleteById(id);
+	}
+
 }

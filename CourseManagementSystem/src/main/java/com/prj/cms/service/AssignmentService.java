@@ -13,5 +13,7 @@ public interface AssignmentService {
 	Assignment updateAssignment(Assignment assignment);
 
 	Assignment getAssignmentById(int id);
+	
+	void  deleteAssignmentById(int id);
 
 }

@@ -57,6 +57,7 @@ public class ProfessorController {
 				.collect(Collectors.toList());
 		assignmentsRegistered.stream().forEach(s -> System.out.println(s.toString()));
 		model.addAttribute("assignmentslist", assignmentsRegistered);
+		model.addAttribute("courseID", assignmentsRegistered.get(0).getCourseId());
 		return "AssignmentsHomePage";
 	}
 
@@ -104,30 +105,28 @@ public class ProfessorController {
 		return false;
 	}
 
-	@PostMapping("/addAssignmentForCourse")
-	public String addAssignment(@ModelAttribute("assignment") CourseAssignments assignments, BindingResult result) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+	@GetMapping("addAssignmentForCourse/{courseId}")
+	public String addAssignmentForCourse(Model model, @PathVariable int courseId) {
+		model.addAttribute("courseId", courseId);
+		Assignment assignment = new Assignment();
+		model.addAttribute("assignment", assignment);
+		return "create_assignment";
+	}
 
-		System.out.println("User Details : " + userDetails.getID());
-		System.out.println("User Details : " + userDetails.getUsername());
-		System.out.println("User Details : " + userDetails.getType());
-
+	@PostMapping("/saveAssignment/{courseId}")
+	public String addAssignment(@ModelAttribute("assignment") Assignment assignment, @PathVariable int courseId,
+			BindingResult result) {
+		Assignment assObj = new Assignment(assignment.getId(), courseId, assignment.getAssignmentName(),
+				assignment.getAssignmentDescription(), assignment.getDueDate());
+		assignmentService.saveAssignment(assObj);
+		CourseAssignments ca = new CourseAssignments(courseId, assignment.getId());
+		courseAssignmentService.saveCourseAssignment(ca);
 		return "AssignmentsHomePage";
 	}
 
 	@GetMapping("/professorCourses/add/assignments/{id}")
-	public String addCourseAssignments(@PathVariable int id) {
-		/*
-		 * Authentication authentication =
-		 * SecurityContextHolder.getContext().getAuthentication(); UserDetailsImpl
-		 * userDetails = (UserDetailsImpl) authentication.getPrincipal();
-		 * 
-		 * System.out.println("User Details : " + userDetails.getID());
-		 * System.out.println("User Details : " + userDetails.getUsername());
-		 * System.out.println("User Details : " + userDetails.getType());
-		 */
-
+	public String addCourseAssignments(@PathVariable int id, Model model) {
+		model.addAttribute("courseID", id);
 		return "AssignmentsHomePage";
 	}
 
@@ -141,19 +140,12 @@ public class ProfessorController {
 		return "redirect:/professorDashboard";
 	}
 
-	@GetMapping("/assignments/{id}{courseID}")
+	@GetMapping("/assignments/{assignmentId}/{courseId}")
 	public String deleteCourseAssignmentMapping(@PathVariable int assignmentId, @PathVariable int courseId) {
-		System.out.println("Assignment id in Professor controller : " + assignmentId);
-
-		// how to get the course id for particular course -- should be sent in path
-		// variable
 		CourseAssignments courseAssObj = new CourseAssignments(courseId, assignmentId);
 		courseAssignmentService.deleteCourseAssignment(courseAssObj);
+		assignmentService.deleteAssignmentById(assignmentId);
 		return "AssignmentsHomePage";
-
-//		StudentCourses studentCourse = new StudentCourses(id, userDetails.getID());
-//		studentCourseService.deleteStudentCourse(studentCourse);
-//		return "redirect:/studentDashboard";
 	}
 
 	@PostMapping("/")
