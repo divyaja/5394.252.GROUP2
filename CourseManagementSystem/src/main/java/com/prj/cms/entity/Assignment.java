@@ -19,15 +19,55 @@ public class Assignment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@Column(name = "course_id", nullable = false)
+	private int courseId;
 	@Column(name = "assignment_name", nullable = false)
 	private String assignmentName;
 	@Column(name = "due_date")
 	private String dueDate;
 
-	public Assignment(int id, String assignmentName, String date) {
+	public Assignment() {
+
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getAssignmentName() {
+		return assignmentName;
+	}
+
+	public void setAssignmentName(String assignmentName) {
 		this.assignmentName = assignmentName;
-		this.dueDate = date;
+	}
+
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public int getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+
+	public Assignment(int id, int courseId, String assignmentName, String dueDate) {
+		super();
+		this.id = id;
+		this.courseId = courseId;
+		this.assignmentName = assignmentName;
+		this.dueDate = dueDate;
 	}
 
 }

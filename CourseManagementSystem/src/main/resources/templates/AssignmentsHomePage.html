@@ -37,12 +37,12 @@
 	<br>
 
 	<div class="container">
-	<div class="row">
+		<div class="row">
 			<div class="col text-center">
 				<form th:action="@{/addAssignmentForCourse}">
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Create Assignments</button>
-					</div> 
+					</div>
 				</form>
 			</div>
 		</div>
@@ -57,10 +57,14 @@
 			</thead>
 			<tbody>
 				<tr th:each="a: ${assignmentslist}">
-					<td th:text="${a.assignmentName}"></td>
+					<td th:text="${a.assignmentName}">
+						<a th:href="${a.assignmentName}"></a>>
+					</td>
 					<td>
-						<a th:href="@{/assignments/edit/{id}(id=${a.id})}" class="btn btn-primary">Update Assignment</a>
-						<a th:href="@{/assignments/{id}(id=${a.id})}" class="btn btn-danger">Delete Assignment</a>
+						<a th:href="@{/assignments/edit/{id}/{courseID}(id=${a.id},courseID = ${a.courseId})}"
+							class="btn btn-primary">Update Assignment</a>
+						<a th:href="@{/assignments/{id}/{courseID}(id=${a.id},courseID = ${a.courseId})}"
+							class="btn btn-danger">Delete Assignment</a>
 					</td>
 				</tr>
 			</tbody>

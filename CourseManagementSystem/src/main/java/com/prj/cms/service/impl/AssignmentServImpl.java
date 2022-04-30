@@ -2,6 +2,7 @@ package com.prj.cms.service.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.prj.cms.entity.Assignment;
@@ -11,6 +12,7 @@ import com.prj.cms.service.AssignmentService;
 @Service
 public class AssignmentServImpl implements AssignmentService {
 
+	@Autowired
 	private AssignmentRespository repository;
 
 	@Override
