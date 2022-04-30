@@ -23,11 +23,23 @@ public class Assignment {
 	private int courseId;
 	@Column(name = "assignment_name", nullable = false)
 	private String assignmentName;
+
+	@Column(name = "assignment_desc", nullable = false)
+	private String assignmentDescription;
+
 	@Column(name = "due_date")
 	private String dueDate;
 
 	public Assignment() {
 
+	}
+
+	public String getAssignmentDescription() {
+		return assignmentDescription;
+	}
+
+	public void setAssignmentDescription(String assignmentDescription) {
+		this.assignmentDescription = assignmentDescription;
 	}
 
 	public int getId() {
@@ -62,12 +74,19 @@ public class Assignment {
 		this.courseId = courseId;
 	}
 
-	public Assignment(int id, int courseId, String assignmentName, String dueDate) {
+	public Assignment(int id, int courseId, String assignmentName, String assignmentDescription, String dueDate) {
 		super();
 		this.id = id;
 		this.courseId = courseId;
 		this.assignmentName = assignmentName;
+		this.assignmentDescription = assignmentDescription;
 		this.dueDate = dueDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Assignment [id=" + id + ", courseId=" + courseId + ", assignmentName=" + assignmentName
+				+ ", assignmentDescription=" + assignmentDescription + ", dueDate=" + dueDate + "]";
 	}
 
 }
