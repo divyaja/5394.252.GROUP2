@@ -53,9 +53,13 @@ public class StudentController {
 
 	@GetMapping("/studentDashboard")
 	public String dashboard(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<StudentCourses> studentCoursesMapping = studentCourseService.findAllCourseStudentMappings();
+		List<StudentCourses> filteredStudentCoursesMapping = studentCoursesMapping.stream()
+				.filter(s -> s.getStudentId() == userDetails.getID()).collect(Collectors.toList());
 		List<Course> coursesRegistered = courseService.getAllCourses().stream()
-				.filter(f -> studentCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
+				.filter(f -> filteredStudentCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
 				.collect(Collectors.toList());
 		coursesRegistered.stream().forEach(s -> System.out.println(s.toString()));
 
@@ -64,7 +68,7 @@ public class StudentController {
 	}
 
 	@PostMapping("/registerStudentCourses")
-	public String registerStudentCourse(@ModelAttribute("course") Course course, BindingResult result) {
+	public String registerStudentCourse(Model model, @ModelAttribute("course") Course course, BindingResult result) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -78,7 +82,7 @@ public class StudentController {
 			result.rejectValue("courseName", null, "Duplicate request. Please register a new course.");
 		}
 		studentCourseService.saveStudentCourse(objStudentCourse);
-		return "studentDashboardPage";
+		return dashboard(model);
 	}
 
 	private boolean isRegistered(List<StudentCourses> existingData, StudentCourses objStudentCourse) {
