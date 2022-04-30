@@ -94,7 +94,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/studentCourses/{id}")
-	public String deleteCourse(@PathVariable int id) {
+	public String deleteStudentCourseMapping(@PathVariable int id) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		System.out.println("course id in student controller : " + id);

@@ -14,7 +14,7 @@ public class CourseAssignmentData implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int courseId;
-	private Long assignmentId;
+	private int assignmentId;
 
 	public CourseAssignmentData() {
 	}

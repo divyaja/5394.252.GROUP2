@@ -7,5 +7,9 @@ import com.prj.cms.entity.CourseAssignments;
 public interface CourseAssignmentService {
 
 	List<CourseAssignments> getAllAssignments();
+	
+	CourseAssignments saveCourseAssignment(CourseAssignments courseAssignment);
+	
+	void deleteCourseAssignment(CourseAssignments courseAssignment);
 
 }
