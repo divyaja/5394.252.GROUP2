@@ -63,9 +63,14 @@ public class ProfessorController {
 
 	@GetMapping("/professorDashboard")
 	public String professorDashboard(Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
 		List<ProfessorCourses> professorCoursesMapping = professorCourseService.findAllCourseProfessorMappings();
+		List<ProfessorCourses> filteredProfessorCoursesMapping = professorCoursesMapping.stream()
+				.filter(s -> s.getProfessorId() == userDetails.getID()).collect(Collectors.toList());
 		List<Course> coursesRegistered = courseService.getAllCourses().stream()
-				.filter(f -> professorCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
+				.filter(f -> filteredProfessorCoursesMapping.stream().anyMatch(s -> f.getId() == s.getCourseId()))
 				.collect(Collectors.toList());
 		coursesRegistered.stream().forEach(s -> System.out.println(s.toString()));
 		model.addAttribute("professorCourseMappings", coursesRegistered);
@@ -73,7 +78,7 @@ public class ProfessorController {
 	}
 
 	@PostMapping("/registerProfessorCourse")
-	public String registerProfessorCourse(@ModelAttribute("course") Course course, BindingResult result) {
+	public String registerProfessorCourse(Model model, @ModelAttribute("course") Course course, BindingResult result) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
@@ -85,7 +90,7 @@ public class ProfessorController {
 
 			professorCourseService.saveProfessorCourse(obj);
 		}
-		return "professorDashboardPage";
+		return professorDashboard(model);
 	}
 
 	private boolean isRegistered(List<ProfessorCourses> existingData, ProfessorCourses objProfessorCourses) {
