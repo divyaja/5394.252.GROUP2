@@ -17,13 +17,13 @@
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<!--<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" th:href="@{/assignmentDashboard}">Dashboard</a>
 				</li>
 			</ul>
-		</div>
+		</div>-->
 		<!-- Navbar links -->
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
@@ -37,35 +37,30 @@
 	<br>
 
 	<div class="container">
-		<div class="row">
+		<!--<div class="row">
 			<div class="col text-center">
-				<form th:action="@{/addAssignmentForCourse/{courseId}(courseId = ${courseID})}">
+				<form th:action="@{/addAssignmentForCourse}">
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Create Assignments</button>
 					</div>
 				</form>
 			</div>
-		</div>
+		</div>-->
 		<br />
 		<br />
 		<table class="table">
 			<thead class="table-dark">
 				<tr>
 					<th> Assignment Name </th>
-					<th> Actions </th>
+					<th> Description </th>
+					<th> Due Date </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="a: ${assignmentslist}">
-					<td th:text="${a.assignmentName}">
-						<a th:href="${a.assignmentName}"></a>
-					</td>
-					<td>
-						<a th:href="@{/assignments/edit/{id}/{courseID}(id=${a.id},courseID = ${a.courseId})}"
-							class="btn btn-primary">Update Assignment</a>
-						<a th:href="@{/assignments/{assignmentId}/{courseId}(assignmentId=${a.id},courseId = ${a.courseId})}"
-							class="btn btn-danger">Delete Assignment</a>
-					</td>
+					<td th:text="${a.assignmentName}"></td>
+					<td th:text="${a.assignmentDescription}"></td>
+					<td th:text="${a.dueDate}"></td>
 				</tr>
 			</tbody>
 		</table>

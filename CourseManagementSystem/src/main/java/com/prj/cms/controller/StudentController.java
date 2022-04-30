@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.prj.cms.entity.Assignment;
 import com.prj.cms.entity.Course;
+import com.prj.cms.entity.CourseAssignments;
 import com.prj.cms.entity.StudentCourses;
+import com.prj.cms.service.AssignmentService;
 import com.prj.cms.service.CourseAssignmentService;
 import com.prj.cms.service.CourseService;
 import com.prj.cms.service.StudentCourseService;
@@ -31,7 +34,10 @@ public class StudentController {
 	private StudentCourseService studentCourseService;
 
 	@Autowired
-	private CourseAssignmentService assignmentService;
+	private CourseAssignmentService courseAssignmentService;
+
+	@Autowired
+	private AssignmentService assignmentService;
 
 	public StudentController(CourseService courseService) {
 		super();
@@ -44,11 +50,20 @@ public class StudentController {
 		return "studentPage";
 	}
 
-	@GetMapping("/listStudentAssignments")
-	public String listStudentAssignments(Model model) {
-		System.out.println("size of the assignments in the Db : " + assignmentService.getAllAssignments());
-		model.addAttribute("studentAssignments", assignmentService.getAllAssignments());
-		return "assignmentsPage";// return to assignments page
+	@GetMapping("studentCourses/view/assignments/{courseId}")
+	public String listStudentAssignments(Model model, @PathVariable int courseId) {
+		List<CourseAssignments> courseAssignments = courseAssignmentService.getAllAssignments();
+		System.out.println("size of all assignments created in DB : " + courseAssignments.size());
+		System.out.println(
+				"size of courses mappings assignments created in DB : " + assignmentService.getAllAssignments().size());
+
+		List<Assignment> assignmentsRegistered = assignmentService.getAllAssignments().stream()
+				.filter(f -> courseAssignments.stream().anyMatch(s -> f.getId() == s.getAssignmentId()))
+				.collect(Collectors.toList());
+		assignmentsRegistered.stream().forEach(s -> System.out.println(s.toString()));
+		model.addAttribute("assignmentslist", assignmentsRegistered);
+		return "studentAssignmentsPage";
+
 	}
 
 	@GetMapping("/studentDashboard")
