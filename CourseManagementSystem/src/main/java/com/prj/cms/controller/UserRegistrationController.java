@@ -35,6 +35,8 @@ public class UserRegistrationController {
 		types = new ArrayList<>();
 		types.add("Professor");
 		types.add("Student");
+		types.add("Admin");
+		
 	}
 
 	@ModelAttribute("user")
