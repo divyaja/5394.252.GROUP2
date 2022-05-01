@@ -53,12 +53,10 @@ public class StudentController {
 	@GetMapping("studentCourses/view/assignments/{courseId}")
 	public String listStudentAssignments(Model model, @PathVariable int courseId) {
 		List<CourseAssignments> courseAssignments = courseAssignmentService.getAllAssignments();
-		System.out.println("size of all assignments created in DB : " + courseAssignments.size());
-		System.out.println(
-				"size of courses mappings assignments created in DB : " + assignmentService.getAllAssignments().size());
-
+		List<CourseAssignments> finalCourseAssignments = courseAssignments.stream()
+				.filter(s -> s.getCourseId() == courseId).collect(Collectors.toList());
 		List<Assignment> assignmentsRegistered = assignmentService.getAllAssignments().stream()
-				.filter(f -> courseAssignments.stream().anyMatch(s -> f.getId() == s.getAssignmentId()))
+				.filter(f -> finalCourseAssignments.stream().anyMatch(s -> f.getId() == s.getAssignmentId()))
 				.collect(Collectors.toList());
 		assignmentsRegistered.stream().forEach(s -> System.out.println(s.toString()));
 		model.addAttribute("assignmentslist", assignmentsRegistered);
