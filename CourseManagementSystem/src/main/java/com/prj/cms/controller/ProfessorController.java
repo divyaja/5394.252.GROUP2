@@ -46,18 +46,20 @@ public class ProfessorController {
 	}
 
 	@GetMapping("/assignmentDashboard")
-	public String loadAssignments(Model model) {
+	public String loadAssignments(Model model, int courseId) {
 		List<CourseAssignments> courseAssignments = courseAssignmentService.getAllAssignments();
+		List<CourseAssignments> finalCourseAssignments = courseAssignments.stream()
+				.filter(s -> s.getCourseId() == courseId).collect(Collectors.toList());
 		System.out.println("size of all assignments created in DB : " + courseAssignments.size());
 		System.out.println(
 				"size of courses mappings assignments created in DB : " + assignmentService.getAllAssignments().size());
 
 		List<Assignment> assignmentsRegistered = assignmentService.getAllAssignments().stream()
-				.filter(f -> courseAssignments.stream().anyMatch(s -> f.getId() == s.getAssignmentId()))
+				.filter(f -> finalCourseAssignments.stream().anyMatch(s -> f.getId() == s.getAssignmentId()))
 				.collect(Collectors.toList());
 		assignmentsRegistered.stream().forEach(s -> System.out.println(s.toString()));
 		model.addAttribute("assignmentslist", assignmentsRegistered);
-		model.addAttribute("courseID", assignmentsRegistered.get(0).getCourseId());
+		model.addAttribute("courseID", courseId);
 		return "AssignmentsHomePage";
 	}
 
@@ -113,21 +115,24 @@ public class ProfessorController {
 		return "create_assignment";
 	}
 
-	@PostMapping("/saveAssignment/{courseId}")
-	public String addAssignment(@ModelAttribute("assignment") Assignment assignment, @PathVariable int courseId,
-			BindingResult result) {
+	@PostMapping("saveAssignment/{courseId}")
+	public String addAssignment(@ModelAttribute("assignment") Assignment assignment, Model model,
+			@PathVariable int courseId, BindingResult result) {
 		Assignment assObj = new Assignment(assignment.getId(), courseId, assignment.getAssignmentName(),
 				assignment.getAssignmentDescription(), assignment.getDueDate());
 		assignmentService.saveAssignment(assObj);
 		CourseAssignments ca = new CourseAssignments(courseId, assignment.getId());
 		courseAssignmentService.saveCourseAssignment(ca);
-		return "AssignmentsHomePage";
+		return loadAssignments(model, courseId);
 	}
 
 	@GetMapping("/professorCourses/add/assignments/{id}")
 	public String addCourseAssignments(@PathVariable int id, Model model) {
 		model.addAttribute("courseID", id);
-		return "AssignmentsHomePage";
+		Assignment assObj = new Assignment();
+		model.addAttribute("assignment", assObj);
+//		return "create_assignment";
+		return loadAssignments(model, id);
 	}
 
 	@GetMapping("/professorCourses/{id}")

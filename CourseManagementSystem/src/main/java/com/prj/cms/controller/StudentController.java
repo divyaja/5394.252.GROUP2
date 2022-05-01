@@ -52,6 +52,8 @@ public class StudentController {
 
 	@GetMapping("studentCourses/view/assignments/{courseId}")
 	public String listStudentAssignments(Model model, @PathVariable int courseId) {
+
+//		System.out.println("View Assignments course ID" + courseId);
 		List<CourseAssignments> courseAssignments = courseAssignmentService.getAllAssignments();
 		List<CourseAssignments> finalCourseAssignments = courseAssignments.stream()
 				.filter(s -> s.getCourseId() == courseId).collect(Collectors.toList());
