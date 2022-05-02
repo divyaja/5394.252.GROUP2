@@ -14,6 +14,7 @@ public class StudentCourseServImpl implements StudentCourseService {
 
 	@Autowired
 	private StudentCoursesRepository studentCourseRepository;
+	
 
 	public StudentCourseServImpl(StudentCoursesRepository studentCourseRepository) {
 		super();

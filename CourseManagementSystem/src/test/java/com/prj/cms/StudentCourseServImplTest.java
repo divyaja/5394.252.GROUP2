@@ -1,8 +1,13 @@
 package com.prj.cms;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +25,8 @@ class StudentCourseServImplTest {
 	@InjectMocks
 	StudentCourseServImpl service;
 
+	List<StudentCourses> list = new ArrayList<StudentCourses>();
+
 	@Mock
 	private StudentCoursesRepository repository;
 
@@ -31,4 +38,20 @@ class StudentCourseServImplTest {
 		service.saveStudentCourse(course);
 		verify(repository, atLeastOnce()).save(course);
 	}
+	
+	
+	@Test
+	void findAllCourseStudentMappingsTest() {
+		when(repository.findAll()).thenReturn(list);
+		assertEquals(service.findAllCourseStudentMappings(),list);
+	}
+	
+	@Test
+	void deleteStudentCourseMappingTest() {
+		doNothing().when(repository).delete(course);
+		service.deleteStudentCourse(course);
+		verify(repository, atLeastOnce()).delete(course);
+	}
+
+	
 }

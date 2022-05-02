@@ -1,6 +1,7 @@
 package com.prj.cms;
 
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,10 +26,16 @@ class ProfessorCourseImplTest {
 	ProfessorCourses course = new ProfessorCourses();
 
 	@Test
-	void saveAssignmentTest() {
+	void saveCourseTest() {
 		when(repository.save(course)).thenReturn(course);
 		service.saveProfessorCourse(course);
 		verify(repository, atLeastOnce()).save(course);
 	}
 
+	@Test
+	void deleteCourseMappingTest() {
+		doNothing().when(repository).delete(course);
+		service.deleteProfessorCourseMapping(course);
+		verify(repository, atLeastOnce()).delete(course);
+	}
 }
