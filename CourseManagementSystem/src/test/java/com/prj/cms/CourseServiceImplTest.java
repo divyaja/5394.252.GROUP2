@@ -10,24 +10,24 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.prj.cms.entity.Assignment;
-import com.prj.cms.repository.AssignmentRespository;
-import com.prj.cms.service.impl.AssignmentServImpl;
+import com.prj.cms.entity.Course;
+import com.prj.cms.repository.CourseRepository;
+import com.prj.cms.service.impl.CourseServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-class AssignmentServImplTest {
+class CourseServiceImplTest {
 	@InjectMocks
-	AssignmentServImpl service;
+	CourseServiceImpl service;
 	@Mock
-	AssignmentRespository repository;
+	CourseRepository repository;
 
-	Assignment assignment = new Assignment();
+	Course course = new Course();
 
 	@Test
 	void saveAssignmentTest() {
-		when(repository.save(assignment)).thenReturn(assignment);
-		service.saveAssignment(assignment);
-		verify(repository, atLeastOnce()).save(assignment);
+		when(repository.save(course)).thenReturn(course);
+		service.saveCourse(course);
+		verify(repository, atLeastOnce()).save(course);
 	}
 
 }
