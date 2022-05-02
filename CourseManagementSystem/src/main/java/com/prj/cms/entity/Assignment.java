@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @Table(name = "assignment", uniqueConstraints = @UniqueConstraint(columnNames = "id"))
 public class Assignment {
 	@Id
