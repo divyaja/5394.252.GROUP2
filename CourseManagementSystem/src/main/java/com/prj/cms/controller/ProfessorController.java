@@ -45,7 +45,7 @@ public class ProfessorController {
 		return "professorPage";
 	}
 
-	@GetMapping("/assignmentDashboard")
+	@GetMapping("/assignmentDashboard/{courseId}")
 	public String loadAssignments(Model model, int courseId) {
 		List<CourseAssignments> courseAssignments = courseAssignmentService.getAllAssignments();
 		List<CourseAssignments> finalCourseAssignments = courseAssignments.stream()
@@ -115,7 +115,7 @@ public class ProfessorController {
 		return "create_assignment";
 	}
 
-	@PostMapping("saveAssignment/{courseId}")
+	@PostMapping("/saveAssignment/{courseId}")
 	public String addAssignment(@ModelAttribute("assignment") Assignment assignment, Model model,
 			@PathVariable int courseId, BindingResult result) {
 		Assignment assObj = new Assignment(assignment.getId(), courseId, assignment.getAssignmentName(),
