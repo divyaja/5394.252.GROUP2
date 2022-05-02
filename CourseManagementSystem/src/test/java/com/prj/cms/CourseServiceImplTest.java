@@ -1,8 +1,12 @@
 package com.prj.cms;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,12 +26,26 @@ class CourseServiceImplTest {
 	CourseRepository repository;
 
 	Course course = new Course();
+	List<Course> list = new ArrayList<Course>();
 
 	@Test
-	void saveAssignmentTest() {
+	void saveCourseTest() {
 		when(repository.save(course)).thenReturn(course);
 		service.saveCourse(course);
 		verify(repository, atLeastOnce()).save(course);
+	}
+	
+	@Test
+	void updateCourseTest() {
+		when(repository.save(course)).thenReturn(course);
+		service.updateCourse(course);
+		verify(repository, atLeastOnce()).save(course);
+	}
+	
+	@Test
+	void getAllCoursesTest() {
+		when(repository.findAll()).thenReturn(list);
+		assertEquals(service.getAllCourses(),list);
 	}
 
 }
