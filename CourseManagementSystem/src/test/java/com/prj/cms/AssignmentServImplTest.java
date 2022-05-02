@@ -16,23 +16,18 @@ import com.prj.cms.service.impl.AssignmentServImpl;
 
 @ExtendWith(MockitoExtension.class)
 class AssignmentServImplTest {
-	@InjectMocks AssignmentServImpl service;
-	@Mock AssignmentRespository repository;
-	
-	Assignment assignment= new Assignment();
-	
+	@InjectMocks
+	AssignmentServImpl service;
+	@Mock
+	AssignmentRespository repository;
 
-//	@Test
-//	void getAllAssignmentsTest() {
-//		when(repository.findAll()).thenReturn(new ArrayList<Assignment>());
-//		assertEquals(new ArrayList<Assignment>(),service.getAllAssignments());
-//	}
+	Assignment assignment = new Assignment();
 
 	@Test
 	void saveAssignmentTest() {
 		when(repository.save(assignment)).thenReturn(assignment);
 		service.saveAssignment(assignment);
-		verify(repository,atLeastOnce()).save(assignment);
+		verify(repository, atLeastOnce()).save(assignment);
 	}
-	
+
 }
