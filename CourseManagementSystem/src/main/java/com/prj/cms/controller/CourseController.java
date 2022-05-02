@@ -69,6 +69,7 @@ public class CourseController {
 		return "redirect:/courses";
 	}
 
+	// GetMapping
 	@GetMapping("/courses/{id}")
 	public String deleteCourse(@PathVariable int id) {
 		courseService.deleteCourseById(id);
