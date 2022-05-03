@@ -61,7 +61,7 @@
 						<a th:href="${a.assignmentName}"></a>
 					</td>
 					<td>
-						<a th:href="@{/assignments/edit/{id}/{courseID}(id=${a.id},courseID = ${a.courseId})}"
+						<a th:href="@{/assignments/edit/{id}/{courseId}(id=${a.id},courseId = ${a.courseId})}"
 							class="btn btn-primary">Update Assignment</a>
 						<a th:href="@{/assignments/{assignmentId}/{courseId}(assignmentId=${a.id},courseId = ${a.courseId})}"
 							class="btn btn-danger">Delete Assignment</a>

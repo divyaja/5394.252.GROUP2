@@ -46,7 +46,7 @@ public class ProfessorController {
 	}
 
 	@GetMapping("/assignmentDashboard/{courseId}")
-	public String loadAssignments(Model model, int courseId) {
+	public String loadAssignments(Model model, Integer courseId) {
 		List<CourseAssignments> courseAssignments = courseAssignmentService.getAllAssignments();
 		List<CourseAssignments> finalCourseAssignments = courseAssignments.stream()
 				.filter(s -> s.getCourseId() == courseId).collect(Collectors.toList());
@@ -59,6 +59,7 @@ public class ProfessorController {
 				.collect(Collectors.toList());
 		assignmentsRegistered.stream().forEach(s -> System.out.println(s.toString()));
 		model.addAttribute("assignmentslist", assignmentsRegistered);
+		System.out.println("course id in load assignments page" + courseId);
 		model.addAttribute("courseID", courseId);
 		return "AssignmentsHomePage";
 	}
@@ -87,7 +88,8 @@ public class ProfessorController {
 		ProfessorCourses obj = new ProfessorCourses(course.getId(), userDetails.getID());
 		List<ProfessorCourses> existingData = professorCourseService.findAllCourseProfessorMappings();
 		if (isRegistered(existingData, obj)) {
-			result.rejectValue("courseName", null, "Duplicate request. Please register a new course.");
+			result.rejectValue("id", null, "Duplicate request. Please register a new course.");
+//			System.out.println("Duplicate course Request");
 		} else {
 
 			professorCourseService.saveProfessorCourse(obj);
@@ -109,7 +111,7 @@ public class ProfessorController {
 
 	@GetMapping("addAssignmentForCourse/{courseId}")
 	public String addAssignmentForCourse(Model model, @PathVariable int courseId) {
-		model.addAttribute("courseId", courseId);
+		model.addAttribute("courseID", courseId);
 		Assignment assignment = new Assignment();
 		model.addAttribute("assignment", assignment);
 		return "create_assignment";
@@ -118,11 +120,15 @@ public class ProfessorController {
 	@PostMapping("/saveAssignment/{courseId}")
 	public String addAssignment(@ModelAttribute("assignment") Assignment assignment, Model model,
 			@PathVariable int courseId, BindingResult result) {
+
+		List<Assignment> list = assignmentService.getAllAssignments();
+		assignment.setId(list.size() + 1);
 		Assignment assObj = new Assignment(assignment.getId(), courseId, assignment.getAssignmentName(),
 				assignment.getAssignmentDescription(), assignment.getDueDate());
 		assignmentService.saveAssignment(assObj);
 		CourseAssignments ca = new CourseAssignments(courseId, assignment.getId());
 		courseAssignmentService.saveCourseAssignment(ca);
+		System.out.println("course ID in save assignment page " + courseId);
 		return loadAssignments(model, courseId);
 	}
 
@@ -146,26 +152,14 @@ public class ProfessorController {
 	}
 
 	@GetMapping("/assignments/{assignmentId}/{courseId}")
-	public String deleteCourseAssignmentMapping(@PathVariable int assignmentId, @PathVariable int courseId) {
+	public String deleteCourseAssignmentMapping(@PathVariable int assignmentId, @PathVariable int courseId,
+			Model model) {
 		CourseAssignments courseAssObj = new CourseAssignments(courseId, assignmentId);
 		courseAssignmentService.deleteCourseAssignment(courseAssObj);
 		assignmentService.deleteAssignmentById(assignmentId);
-		return "AssignmentsHomePage";
-	}
+		model.addAttribute("courseID", courseId);
+		return loadAssignments(model, courseId);
 
-	@PostMapping("/")
-	public String saveCourseAssignment(@ModelAttribute("assignment") Assignment assignment, BindingResult result) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-		System.out.println("STudent Details : " + userDetails.getID());
-		System.out.println("STudent Details : " + userDetails.getUsername());
-		System.out.println("STudent Details : " + userDetails.getType());
-
-		CourseAssignments objCourseAssignments = new CourseAssignments(assignment.getCourseId(), assignment.getId());
-//		List<CourseAssignments> assList = courseAssignmentService.getAllAssignments();
-		courseAssignmentService.saveCourseAssignment(objCourseAssignments);
-		return "assignmentDashboard";
 	}
 
 }

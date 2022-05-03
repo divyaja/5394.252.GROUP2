@@ -1,23 +1,21 @@
 package com.prj.cms.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@Entity
 @Table(name = "courses", uniqueConstraints = @UniqueConstraint(columnNames = "course_name"))
 public class Course {
 
@@ -32,18 +30,6 @@ public class Course {
 
 	@Column(name = "course_name", nullable = false)
 	private String courseName;
-
-	// private List<Assignment> assignments;
-
-	/*
-	 * @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	 * 
-	 * @JoinTable(name = "student_courses", joinColumns = @JoinColumn(name =
-	 * "course_id", referencedColumnName = "id"), inverseJoinColumns
-	 * = @JoinColumn(name = "student_id", referencedColumnName = "id")) private
-	 * Collection<User> students;
-	 */
-	// private List<Assignment> assignments;
 
 	public Course(int id, String courseName) {
 		super();
